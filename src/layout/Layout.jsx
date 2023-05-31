@@ -1,42 +1,29 @@
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { BrowserRouter as Router, Link, RouterProvider, createBrowserRouter, redirect, useNavigate } from 'react-router-dom';
-import TextFromImage from '../components/TextFromImage';
+import { Layout, Menu, theme } from 'antd';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import { menu } from '../constants/menu';
 const { Header, Content, Footer } = Layout;
 
-const BasicLayout = ({ children }) => {
-    const router = createBrowserRouter(
-        [
-            {
-                path: "/",
-                element: <div>Hello world</div>,
-            },
-            {
-                path: "/text-from-image",
-                element: <TextFromImage />,
-            },
-        ]
-    );
-
+const BasicLayout = () => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
     return (
         <Layout className="layout">
-            <Header
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-            >
-                <div className="demo-logo" />
-                <Router>
+            <Router>
+
+                <Header
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <div className="demo-logo" />
                     <Menu
                         style={{ width: '100%' }}
                         theme="dark"
                         mode="horizontal"
-                        defaultSelectedKeys={['2']}
+                        defaultSelectedKeys={['0']}
                         items={menu.map((item, index) => {
                             return {
                                 key: index,
@@ -45,14 +32,13 @@ const BasicLayout = ({ children }) => {
                             }
                         })}
                     />
-                </Router>
-            </Header>
-            <Content
-                style={{
-                    padding: '0 50px',
-                }}
-            >
-                {/* <Breadcrumb
+                </Header>
+                <Content
+                    style={{
+                        padding: '0 50px',
+                    }}
+                >
+                    {/* <Breadcrumb
                     style={{
                         margin: '16px 0',
                     }}
@@ -61,24 +47,35 @@ const BasicLayout = ({ children }) => {
                     <Breadcrumb.Item>List</Breadcrumb.Item>
                     <Breadcrumb.Item>App</Breadcrumb.Item>
                 </Breadcrumb> */}
-                <div
-                    className="site-layout-content"
+                    <div
+                        className="site-layout-content"
+                        style={{
+                            background: colorBgContainer,
+                            marginTop: 16,
+                            padding: 16
+                        }}
+                    >
+                        {/* <RouterProvider router={router} />
+                     */}
+                        <Routes>
+                            <Route exact path="/" element={<div>Hello world</div>} />
+                            {menu.map((item, index) => {
+                                return (
+                                    <Route path={item.path} element={item.element} key={index} />
+                                );
+                            })}
+                        </Routes>
+                    </div>
+                </Content>
+                <Footer
                     style={{
-                        background: colorBgContainer,
-                        marginTop: 16,
-                        padding: 16
+                        textAlign: 'center',
                     }}
                 >
-                    <RouterProvider router={router} />
-                </div>
-            </Content>
-            <Footer
-                style={{
-                    textAlign: 'center',
-                }}
-            >
-                Ant Design ©2023 Created by Ant UED
-            </Footer>
+                    Ant Design ©2023 Created by Ant UED
+                </Footer>
+            </Router>
+
         </Layout>
     );
 };

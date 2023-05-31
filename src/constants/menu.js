@@ -1,3 +1,4 @@
+import ImageRecognition from "../components/ImageRegconition";
 import TextFromImage from "../components/TextFromImage";
 
 export const menu = [
@@ -10,5 +11,10 @@ export const menu = [
         path: "/text-from-image",
         element: <TextFromImage />,
         text: "Text From Image"
+    },
+    {
+        path: "/image-recognition",
+        element: <ImageRecognition />,
+        text: "Image Recognition"
     },
 ]
