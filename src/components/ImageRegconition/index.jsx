@@ -6,19 +6,33 @@ import { useState } from "react";
 
 const ImageRecognition = () => {
     const [imageSrc, setImageSrc] = useState("");
+    const [prediction, setPrediction] = useState([]);
 
     const propsUpload = {
         name: 'file',
         action: '',
         onChange(info) {
             if (info.file.status !== 'uploading') {
-                setImageSrc(info.file.originFileObj)
+                setImageSrc(info.file.originFileObj);
+                const imgElement = document.createElement("img");
+                imgElement.src = URL.createObjectURL(info.file.originFileObj);
+
+                imgElement.onload = async () => {
+                    await detectImageObject(imgElement);
+                }
             }
             if (info.file.status === 'done') {
                 console.log(info.file, info.fileList);
             }
         },
     };
+
+    const detectImageObject = async (image) => {
+        const model = await cocoSsd.load({});
+        const predictions = await model.detect(image, 10);
+
+        console.log(predictions);
+    }
 
     return (
         <Row>
