@@ -28,10 +28,19 @@
   color: #61dafb;
 }
 
+.image-recognize-box .antd-image {
+  width: 100%;
+}
+
+.recognize-box::before {
+  content: attr(datacustomattribute);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
